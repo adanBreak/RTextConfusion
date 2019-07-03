@@ -1,8 +1,8 @@
 package com.gordon.app;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
@@ -17,6 +17,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -35,35 +36,47 @@ public class Encryptor {
 		
 		logger.info("Getting cipher..");
 		KeyGenerator kgen = KeyGenerator.getInstance("AES");
-		kgen.init(128,new SecureRandom("".getBytes())); //here need to update.
+		kgen.init(128,new SecureRandom("123456".getBytes())); //here need to update.
 		SecretKey secretKey = kgen.generateKey();
 		byte[]enCodeFormat = secretKey.getEncoded();
 		SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
 		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		cipher.init(Cipher.ENCRYPT_MODE, key);
 		
-		File folder = new File("...");
-		if(folder.exists())
+		File inputFolder = new File("d:\\novels1"); //here need to upate.
+		File outputFolder = new File("d:\\novels2");
+		
+		if(!inputFolder.exists() || !outputFolder.exists())
 		{
-			logger.info("Encrypting files..");
-			
-			for(File file:folder.listFiles())
-			{
-				if(file.isDirectory())
-				{
-					
-				}
-				logger.info("Encrypting file： " + file.getName());
-				byte[] byteContent = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
-				byte[] result = cipher.doFinal(byteContent);
-				
-			}
+			logger.error("Folders you specify doesn't exist.");
+			throw new FileNotFoundException("Folders you specify doesn't exist.");
 		}
 		
-		else
+		if(!inputFolder.isDirectory() || !outputFolder.isDirectory())
 		{
-			logger.error("Folder not exist.");
+			logger.error("Folders you specify should be a directory.");
+			throw new FileNotFoundException("Folders you specify should be a directory.");
 		}
+		
+		logger.info("Encrypting files..");
+		
+		for(File originalfile:inputFolder.listFiles())
+		{
+			String fileName = originalfile.getName();
+			if(originalfile.isFile() && fileName.endsWith(".txt"))
+			{
+				logger.info("Encrypting file： " + originalfile.getName());
+				byte[] byteContent = Files.readAllBytes(Paths.get(originalfile.getAbsolutePath()));
+				byte[] result = cipher.doFinal(byteContent);
+				File outputFile = new File(outputFolder, fileName);
+				FileUtils.writeByteArrayToFile(outputFile, result);
+			}
+			
+			
+		}
+		
+		logger.info("Done.");
+		
 	}
 
 }
