@@ -17,3 +17,17 @@ Allow new cloud providers to intergrate with Kubernetes easiliy by using plugins
 Node Controller: Initializing a node, get node's network address and hostname, check response.
 Route Controller: Configure routes in the cloud appropriately s that containers on different odes in the Kubernetes cluster can communicate with each other. GCE
 Service Controller: Responsible for listening to service create, update, delete events.
+
+
+Service
+Kubernetes gives pods their own IP address and a single DNS name for a set of pods, and can load balance across them
+Service is an abstraction which defines a logical set of pods and policy by which to access them.
+Can be multi-port services through protocols
+Can be used for service discovery
+
+Publishing Service
+Cluster IP - Expose the service on a cluster-internal IP. It can be only reachable within the cluster.
+NodePort - Expose the service on each Node's IP. Reach the service outside of the cluster by requesting NodeIP:NodePort
+LoadBalancer - Expose service externally using a cloud provider's load balancer.
+ExternalName - Maps the service to the contents of the externalName field. Easiest and right away to access external services.
+ExternalIP - Specify external IPs
