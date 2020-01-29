@@ -31,3 +31,22 @@ NodePort - Expose the service on each Node's IP. Reach the service outside of th
 LoadBalancer - Expose service externally using a cloud provider's load balancer.
 ExternalName - Maps the service to the contents of the externalName field. Easiest and right away to access external services.
 ExternalIP - Specify external IPs
+
+KCM https://feisky.gitbooks.io/kubernetes/content/components/controller-manager.html
+
+Service
+Kubernetes gives pods their own IP address and a single DNS name for a set of pods, and can load balance across them
+Service is an abstraction which defines a logical set of pods and policy by which to access them.
+Can be multi-port services through protocols
+Can be used for service discovery
+
+Publishing Service
+Cluster IP - Expose the service on a cluster-internal IP. It can be only reachable within the cluster.
+NodePort - Expose the service on each Node's IP. Reach the service outside of the cluster by requesting NodeIP:NodePort
+LoadBalancer - Expose service externally using a cloud provider's load balancer.
+ExternalName - Maps the service to the contents of the externalName field. Easiest and right away to access external services.
+ExternalIP - Specify external IPs
+
+DNS
+Every service defined in the cluster is assigned a DNS name. 
+When a pod is created, its hostname is the Pods' metadata.name value.
