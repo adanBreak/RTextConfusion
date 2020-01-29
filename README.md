@@ -50,3 +50,10 @@ ExternalIP - Specify external IPs
 DNS
 Every service defined in the cluster is assigned a DNS name. 
 When a pod is created, its hostname is the Pods' metadata.name value.
+
+Deployment
+- Create a deployment to make replicaset rollout updated.
+-Don't use naked pods if you can avoid it. Naked pods will not be rescheduled in the event of a node failure
+
+Scheduler
+- A scheduler watches newly created pods that have no nodes assigned. If no suitable nodes to run, a pod will be kept unscheduled
