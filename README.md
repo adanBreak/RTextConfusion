@@ -57,3 +57,7 @@ Deployment
 
 Scheduler
 - A scheduler watches newly created pods that have no nodes assigned. If no suitable nodes to run, a pod will be kept unscheduled
+
+面试链接：
+Zoom:https://hsbc.zoom.us/j/4670939454?pwd=ZXVLZDJvNTk4QXVsYTgzYkdBR0RYdz09
+Time: Thursday, November 17, 2022 3:00 PM-3:30 PM
